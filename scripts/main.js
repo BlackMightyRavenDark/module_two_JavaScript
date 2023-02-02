@@ -1,3 +1,5 @@
+"use strict";
+
 console.log("Script \"main.js\" started");
 
 let money = 2500;

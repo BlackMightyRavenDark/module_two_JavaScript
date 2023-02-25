@@ -24,52 +24,60 @@ function logOutput(s) {
     document.write(`${s}<br>`);
 }
 
+const getAccumulatedMonthIncome = (earnings, extra, expenses) => {
+    return earnings + extra - expenses;
+}
+
+const getTargetMonth = (targetProfit, monthIncome) => {
+    return Math.ceil(targetProfit / monthIncome);
+}
+
 const money = parseFloat(prompt("Ваш месячный доход?"));
 if (isValidNumber(money)) {
-    logOutput(`Доход за месяц: ${money}`);
-    const expenses = prompt("Перечислите возможные расходы за рассчитываемый период через запятую:");
-    if (expenses !== "" && expenses.includes(",")) {
-        logOutput(`Возможные расходы: ${expenses}`);
+    const profit = "фриланс, вёрстка, хакинг";
+    const extraMoney = parseFloat(prompt(`Ваш возможный доход за дополнительные работы (${profit}):`));
+    if (isValidNumber(extraMoney)) {
+        const expenses = prompt("Перечислите возможные расходы за рассчитываемый период через запятую:");
+        if (expenses !== "" && expenses.includes(",")) {
+            const amount = parseFloat(prompt("Во сколько обойдутся обязательные статьи расходов?"));
+            if (isValidNumber(amount)) {
+                const depositExists = confirm("Есть ли у вас вклад в банке? OK - Да, Cancel - Нет");
+                const accumulatedMonthIncome = getAccumulatedMonthIncome(money, extraMoney, amount);
+                if (accumulatedMonthIncome > 0) {
+                    logOutput(`Ваш бюджет на месяц с учётом ваших расходов составляет: ${roundToFixed(accumulatedMonthIncome, 1)}`);
 
-        const amount = parseFloat(prompt("Во сколько обойдутся обязательные статьи расходов?"));
-        if (isValidNumber(amount)) {
-            logOutput(`Обязательные расходы: ${amount}`);
-            
-            const depositExists = confirm("Есть ли у вас вклад в банке? OK - Да, Cancel - Нет");
-            logOutput(`Депозит в банке: ${depositExists ? "Есть" : "Нет"}`);
-            const budgetMonth = money - amount;
-            
-            if (budgetMonth > 0) {
-                logOutput(`Доход за месяц с учётом расходов: ${roundToFixed(budgetMonth, 1)}`);
+                    const incomeDay = accumulatedMonthIncome / 30;
+                    const incomeDayString = Number.isInteger(incomeDay) ? incomeDay.toString() : Math.floor(incomeDay);
+                    logOutput(`Дневной бюджет: ${incomeDayString}`);
 
-                const budgetDay = budgetMonth / 30;
-                const budgetDayString = Number.isInteger(budgetDay) ? budgetDay.toString() : Math.floor(budgetDay);
-                logOutput(`Доход за день с учётом расходов: ${budgetDayString}`);
+                    const purpose = parseFloat(prompt("Сколько вы хотите заработать?"));
+                    if (isValidNumber(purpose)) {
+                        if (purpose > accumulatedMonthIncome) {
+                            const arbeitenMonth = getTargetMonth(purpose, accumulatedMonthIncome);
+                            logOutput(`Ваша цель накопить ${purpose} с учётом всех ваших расхоодов будет достигнута за ${arbeitenMonth} месяцев`);
+                        } else {
+                            logOutput(`Вы уже достигли своей цели в ${purpose}!`);
+                        }
 
-                const purpose = parseFloat(prompt("Сколько вы хотите заработать?"));
-                if (isValidNumber(purpose)) {
-                    logOutput(`Необходимо заработать: ${purpose}`);
-
-                    const arbeiten = purpose / budgetMonth;
-                    const arbeitenString = Number.isInteger(arbeiten) ? arbeiten.toString() : (Math.floor(arbeiten) + 1);
-                    logOutput(`Вам необходимо работать ${arbeitenString} месяцев`);
-
-                    if (budgetDay >= 6000) {
-                        logOutput("У вас высокий уровень дохода");
-                    } else if (budgetDay >= 3000) {
-                        logOutput("У вас средний уровень дохода");
-                    } else if (budgetDay > 0) {
-                        logOutput("У вас низкий уровень дохода");
-                    } else if (budgetDay == 0) {
-                        logOutput("Вы выходите в ноль");
+                        if (incomeDay >= 6000) {
+                            logOutput("У вас высокий уровень дохода");
+                        } else if (incomeDay >= 3000) {
+                            logOutput("У вас средний уровень дохода");
+                        } else if (incomeDay > 0) {
+                            logOutput("У вас низкий уровень дохода");
+                        } else if (incomeDay === 0) {
+                            logOutput("Вы выходите в ноль");
+                        } else {
+                            logOutput("К сожалению, вы тратите больше, чем зарабатываете!");
+                        }
                     } else {
-                        logOutput("К сожалению, вы тратите больше, чем зарабатываете!");
+                        showError();
                     }
                 } else {
-                    showError();
+                    logOutput("К сожалению, Вы тратите больше, чем зарабатываете!");
                 }
             } else {
-                logOutput("К сожалению, Вы тратите больше, чем зарабатываете!");
+                showError();
             }
         } else {
             showError();
@@ -80,4 +88,5 @@ if (isValidNumber(money)) {
 } else {
     showError();
 }
+
 console.log("Script \"main.js\" finished");

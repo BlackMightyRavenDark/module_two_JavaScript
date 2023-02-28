@@ -2,15 +2,32 @@
 
 console.log("Script \"main.js\" started");
 
+const ATTEMPT_COUNT_MAX = 10;
+const MIN_NUMBER = 1;
+const MAX_NUMBER = 50;
+
 function randomRange(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 const runGame = () => {
-    const hiddenNumber = randomRange(1, 10);
+    alert(`Сейчас мы сыграем в игру! Отгадай число от ${MIN_NUMBER} до ${MAX_NUMBER} за ${ATTEMPT_COUNT_MAX} попыток или твой жёсткий диск будет отформатирован!`);
+
+    const hiddenNumber = randomRange(MIN_NUMBER, MAX_NUMBER);
+    let attemptsLeft = ATTEMPT_COUNT_MAX;
 
     function gameLoop() {
-        const answer = prompt("Угадай число от 1 до 10");
+        if (attemptsLeft <= 0) {
+            alert("У вас закончились попытки! К сожалению, мы были вынуждены отформатировать ваш жёсткий диск!");
+            const confirmed = confirm("Хотите отменить форматирование?");
+            if (confirmed) {
+                runGame();
+            } else {
+                alert("Форматирование жёсткого диска успешно завершено!");
+            }
+            return;
+        }
+        const answer = prompt(`Угадай число от ${MIN_NUMBER} до ${MAX_NUMBER}`);
 
         if (answer === null) {
             alert("Игра окончена");
@@ -22,13 +39,17 @@ const runGame = () => {
             alert("Введи число!");
             gameLoop();
         } else if (answeredNumber < hiddenNumber) {
-            alert("Загаданное число больше");
+            attemptsLeft--;
+            alert(`Загаданное число больше! Осталось попыток: ${attemptsLeft}`);
             gameLoop();
         } else if (answeredNumber > hiddenNumber) {
-            alert("Загаданное число меньше");
+            attemptsLeft--;
+            alert(`Загаданное число меньше! Осталось попыток: ${attemptsLeft}`);
             gameLoop();
         } else if (answeredNumber === hiddenNumber) {
-            alert("Поздравляю, Вы угадали!!!");
+            if (confirm("Поздравляю, Вы угадали!!! Сыграем ещё?")) {
+                runGame();
+            }
         }
     }
 

@@ -2,15 +2,15 @@
 
 console.log("Script \"main.js\" started");
 
-const ATTEMPT_COUNT_MAX = 10;
-const MIN_NUMBER = 1;
-const MAX_NUMBER = 50;
-
 function randomRange(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 const runGame = () => {
+    const ATTEMPT_COUNT_MAX = 10;
+    const MIN_NUMBER = 1;
+    const MAX_NUMBER = 50;
+
     alert(`Сейчас мы сыграем в игру! Отгадай число от ${MIN_NUMBER} до ${MAX_NUMBER} за ${ATTEMPT_COUNT_MAX} попыток или твой жёсткий диск будет отформатирован!`);
 
     const hiddenNumber = randomRange(MIN_NUMBER, MAX_NUMBER);

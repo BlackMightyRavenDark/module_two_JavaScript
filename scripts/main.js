@@ -2,106 +2,37 @@
 
 console.log("Script \"main.js\" started");
 
-function isValidNumber(n) {
-    return typeof(n) === "number" && !Number.isNaN(n);
-}
-
-function roundToFixed(n, radix) {
-    if (!Number.isInteger(n)) {
-        n = n.toFixed(radix);
+const arr = ["808", "253", "438", "345", "266", "477", "983", "327", "445"];
+arr.forEach((elem, index) => {
+    const symbol = elem[0];
+    if (symbol === "2" || symbol === "4") {
+        console.log(`Число ${elem} с индексом ${index}`);
     }
-    return n;
-}
+});
 
-function logOutput(s) {
-    console.log(s);
-    document.write(`${s}<br>`);
-}
-
-const getAccumulatedMonthIncome = (earnings, extra, expenses) => {
-    return earnings + extra - expenses;
-}
-
-const getTargetMonth = (targetProfit, monthIncome) => {
-    return Math.ceil(targetProfit / monthIncome);
-}
-
-const program = () => {
-    let money;
-    do {
-        let moneyString = prompt("Ваш месячный доход?");
-        if (moneyString === null) return null;
-        money = parseFloat(moneyString);
-    } while (!isValidNumber(money));
-
-    const profit = "фриланс, вёрстка, хакинг";
-
-    let extraMoney;
-    do {
-        let extraMoneyString = prompt(`Ваш возможный доход за дополнительные работы (${profit}):`);
-        if (extraMoneyString === null) return null;
-        extraMoney = parseFloat(extraMoneyString);
-    } while (!isValidNumber(extraMoney));
-
-    let expenses;
-    do {
-        expenses = prompt("Перечислите возможные расходы за рассчитываемый период через запятую:");
-        if (expenses === null) return null;
-    } while (!expenses.includes(","));
-
-    let amount;
-    do {
-        let amountString = prompt("Во сколько обойдутся обязательные статьи расходов?");
-        if (amountString === null) return null;
-        amount = parseFloat(amountString);
-    } while (!isValidNumber(amount));
-
-    const isDepositExists = confirm("Есть ли у вас вклад в банке? OK - Да, Cancel - Нет");
-    logOutput(`Вклад в банке: ${isDepositExists ? "Есть" : "Нет"}`)
-
-    const accumulatedMonthIncome = getAccumulatedMonthIncome(money, extraMoney, amount);
-    if (accumulatedMonthIncome <= 0) {
-        logOutput("Цель не будет достигнута никогда! :'(");
-        return false;
+const myFunc = (t) => {
+    if (t === null) {
+        alert("Пользователь отменил ввод!");
+        return;
+    }
+    if (typeof(t) !== "string") {
+        alert("Ошибка! В функцию была передана не строка!");
+        return;
     }
 
-    logOutput(`Ваш бюджет на месяц с учётом ваших расходов составляет: ${roundToFixed(accumulatedMonthIncome, 1)}`);
-
-    const incomeDay = accumulatedMonthIncome / 30;
-    const incomeDayString = Number.isInteger(incomeDay) ? incomeDay.toString() : Math.floor(incomeDay);
-    logOutput(`Дневной бюджет: ${incomeDayString}`);
-
-    let purpose;
-    do {
-        let purposeString = prompt("Сколько вы хотите заработать?");
-        if (purposeString === null) return null;
-        purpose = parseFloat(purposeString);
-    } while (!isValidNumber(purpose));
-
-    if (purpose > accumulatedMonthIncome) {
-        const arbeitenMonth = getTargetMonth(purpose, accumulatedMonthIncome);
-        logOutput(`Ваша цель накопить ${purpose} с учётом всех ваших расхоодов будет достигнута за ${arbeitenMonth} месяцев`);
-    } else {
-        logOutput(`Вы уже достигли своей цели в ${purpose}!`);
+    if (t === "") {
+        alert("Ошибка! В функцию была передана пустая строка!");
+        return;
     }
 
-    if (incomeDay >= 6000) {
-        logOutput("У вас высокий уровень дохода");
-    } else if (incomeDay >= 3000) {
-        logOutput("У вас средний уровень дохода");
-    } else if (incomeDay > 0) {
-        logOutput("У вас низкий уровень дохода");
-    } else if (incomeDay === 0) {
-        logOutput("Вы выходите в ноль");
-    } else {
-        logOutput("Цель не будет достигнута никогда! :'(");
+    t = t.trim();
+
+    if (t.length > 30) {
+        t = `${t.substring(0, 30)}...`;
     }
 
-    return true;
+    console.log("Результат:", t);
 }
-if (program() === null) {
-    logOutput("Вычисления были отменены!");
-    alert("Пользователь нажал отмену");
-}
+myFunc(prompt("Введите что-нибудь:"));
 
 console.log("Script \"main.js\" finished");

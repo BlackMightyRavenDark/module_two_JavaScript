@@ -1,0 +1,24 @@
+body {
+    background-color: #bbbbbb;
+}
+
+form {
+    width: 220px;
+    background-color: white;
+}
+
+input {
+    margin-left: 20px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+button {
+    cursor: pointer;
+    background-color: #0077bb;
+    color: white;
+}

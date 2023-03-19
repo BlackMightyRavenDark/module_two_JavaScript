@@ -6,6 +6,7 @@
             Learning JavaScript
         </title>
 
+        <script src="./scripts/main.js" type="module" defer></script>
         <link rel="stylesheet" href="./css/main.css">
     </head>
 
@@ -15,49 +16,67 @@
                 JavaScript homework-09
             </h1>
 
-            <form action="" method="post">
-                <div>
+            <div class="megawrapper">
+                <form action="">
                     <div>
-                        Ваш месячный доход:
+                        <div>
+                            Ваш месячный доход:
+                        </div>
+
+                        <div class="input-wrapper">
+                            <input type="text" id="inputIncomingMonth">
+                            <img src="./images/cross.png" alt="X">
+                        </div>
                     </div>
 
-                    <input type="text" id="inputIncomingMonth">
-                </div>
-
-                <div>
                     <div>
-                        Ваш возможный доход за дополнительные работы:
+                        <div>
+                            Ваш возможный доход за дополнительные работы:
+                        </div>
+
+                        <div class="input-wrapper">
+                            <input type="text" id="inputExtraIncoming">
+                            <img src="./images/cross.png" alt="X">
+                        </div>
                     </div>
 
-                    <input type="text" id="inputExtraIncoming">
-                </div>
-
-                <div>
                     <div>
-                        Обязательные расходы:
+                        <div>
+                            Обязательные расходы:
+                        </div>
+
+                        <div class="input-wrapper">
+                            <input type="text" id="inputExpensesMonth">
+                            <img src="./images/cross.png" alt="X">
+                        </div>
                     </div>
 
-                    <input type="text" id="inputExpensesMonth">
-                </div>
-
-                <div>
                     <div>
-                        Сколько вы хотите заработать?
+                        <div>
+                            Сколько вы хотите заработать?
+                        </div>
+
+                        <div class="input-wrapper">
+                            <input type="text" id="inputPurpose">
+                            <img src="./images/cross.png" alt="X">
+                        </div>
                     </div>
 
-                    <input type="text" id="inputPurpose">
-                </div>
+                    <div class="buttons">
+                        <button id="proceed">
+                            Рвсчитать
+                        </button>
 
-                <div class="buttons">
-                    <button type="submit">
-                        Рвсчитать
-                    </button>
+                        <button type="reset" id="clear">
+                            Очистить
+                        </button>
+                    </div>
+                </form>
 
-                    <button type="reset">
-                        Очистить
-                    </button>
+                <div id="results">
+
                 </div>
-            </form>
+            </div>
         </main>
     </body>
 </html>

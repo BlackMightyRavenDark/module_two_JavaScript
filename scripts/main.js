@@ -1,21 +1,47 @@
 "use strict";
 
-console.log("Script \"main.js\" started");
+function stringIsValidNumber(str) {
+    const typeofStr = typeof(str);
+    if (typeofStr === "string") {
+        if (str === "") {
+            return false;
+        }
+        return !Number.isNaN(Number.parseFloat(str));
+    } else if (typeofStr === "number") {
+        return !Number.isNaN(str);
+    }
+    return false;
+}
 
-function isValidNumber(n) {
-    return typeof(n) === "number" && !Number.isNaN(n);
+function isValidInput(input) {
+    const isValid = stringIsValidNumber(input.value);
+    if (isValid) {
+        input.style.borderColor = "#000000";
+        input.nextElementSibling.style.display = 'none';
+    } else {
+        input.style.borderColor = "#ff0000";
+        input.nextElementSibling.style.display = 'block';
+    }
+    return isValid;
+}
+
+function addChild(node, text) {
+    const newNode = document.createElement("p");
+    newNode.textContent = text;
+    node.appendChild(newNode);
+}
+
+function clearChilds(node) {
+    for (let i = node.childNodes.length - 1; i > 0; --i) {
+        node.removeChild(node.childNodes[i]);
+    }
 }
 
 function roundToFixed(n, radix) {
-    if (!Number.isInteger(n)) {
+    if (Number.isFinite(n)) {
         n = n.toFixed(radix);
     }
     return n;
-}
-
-function logOutput(s) {
-    console.log(s);
-    document.write(`${s}<br>`);
 }
 
 const getAccumulatedMonthIncome = (earnings, extra, expenses) => {
@@ -26,82 +52,75 @@ const getTargetMonth = (targetProfit, monthIncome) => {
     return Math.ceil(targetProfit / monthIncome);
 }
 
-const program = () => {
-    let money;
-    do {
-        let moneyString = prompt("Ваш месячный доход?");
-        if (moneyString === null) return null;
-        money = parseFloat(moneyString);
-    } while (!isValidNumber(money));
+const inputMonthIncoming = document.querySelector("#inputIncomingMonth");
+const inputExtraIncoming = document.querySelector("#inputExtraIncoming");
+const inputExpensesMonth = document.querySelector("#inputExpensesMonth");
+const inputPurpose = document.querySelector("#inputPurpose");
+const resultList = document.querySelector("#results");
+const btnProceed = document.querySelector("#proceed");
+const btnClear = document.querySelector("#clear");
 
-    const profit = "фриланс, вёрстка, хакинг";
+function onInputHandler(e) {
+    isValidInput(e.target);
+}
 
-    let extraMoney;
-    do {
-        let extraMoneyString = prompt(`Ваш возможный доход за дополнительные работы (${profit}):`);
-        if (extraMoneyString === null) return null;
-        extraMoney = parseFloat(extraMoneyString);
-    } while (!isValidNumber(extraMoney));
+inputMonthIncoming.addEventListener("input", onInputHandler);
+inputExtraIncoming.addEventListener("input", onInputHandler);
+inputExpensesMonth.addEventListener("input", onInputHandler);
+inputPurpose.addEventListener("input", onInputHandler);
 
-    let expenses;
-    do {
-        expenses = prompt("Перечислите возможные расходы за рассчитываемый период через запятую:");
-        if (expenses === null) return null;
-    } while (!expenses.includes(","));
+btnProceed.onclick = (e) => {
+    e.preventDefault();
+    clearChilds(resultList);
+    if (isValidInput(inputMonthIncoming) &&
+        isValidInput(inputExtraIncoming) &&
+        isValidInput(inputExpensesMonth) &&
+        isValidInput(inputPurpose)) {
+            calculate();
+    } else {
+        addChild(resultList, "Ошибка вычисления!");
+    }
+};
 
-    let amount;
-    do {
-        let amountString = prompt("Во сколько обойдутся обязательные статьи расходов?");
-        if (amountString === null) return null;
-        amount = parseFloat(amountString);
-    } while (!isValidNumber(amount));
+btnClear.onclick = (e) => {
+    clearChilds(resultList);
+}
 
-    const isDepositExists = confirm("Есть ли у вас вклад в банке? OK - Да, Cancel - Нет");
-    logOutput(`Вклад в банке: ${isDepositExists ? "Есть" : "Нет"}`)
-
-    const accumulatedMonthIncome = getAccumulatedMonthIncome(money, extraMoney, amount);
+function calculate() {
+    const moneyMonth = Number.parseFloat(inputMonthIncoming.value);
+    const extraMoneyMonth = Number.parseFloat(inputExtraIncoming.value);
+    const expensesMonth = Number.parseFloat(inputExpensesMonth.value);
+    const accumulatedMonthIncome = getAccumulatedMonthIncome(moneyMonth, extraMoneyMonth, expensesMonth);
     if (accumulatedMonthIncome <= 0) {
-        logOutput("Цель не будет достигнута никогда! :'(");
-        return false;
+        addChild(resultList, "Ошибка! Вы тратите больше, чем зарабатываете!");
+        addChild(resultList, "Цель не будет достигнута никогда! :'(");
+        return;
     }
 
-    logOutput(`Ваш бюджет на месяц с учётом ваших расходов составляет: ${roundToFixed(accumulatedMonthIncome, 1)}`);
+    addChild(resultList, `Ваш бюджет на месяц с учётом расходов составляет: ${roundToFixed(accumulatedMonthIncome, 1)}`);
 
     const incomeDay = accumulatedMonthIncome / 30;
     const incomeDayString = Number.isInteger(incomeDay) ? incomeDay.toString() : Math.floor(incomeDay);
-    logOutput(`Дневной бюджет: ${incomeDayString}`);
+    addChild(resultList, `Дневной бюджет: ${incomeDayString}`);
 
-    let purpose;
-    do {
-        let purposeString = prompt("Сколько вы хотите заработать?");
-        if (purposeString === null) return null;
-        purpose = parseFloat(purposeString);
-    } while (!isValidNumber(purpose));
+    const purpose = Number.parseFloat(inputPurpose.value);
 
     if (purpose > accumulatedMonthIncome) {
         const arbeitenMonth = getTargetMonth(purpose, accumulatedMonthIncome);
-        logOutput(`Ваша цель накопить ${purpose} с учётом всех ваших расхоодов будет достигнута за ${arbeitenMonth} месяцев`);
+        addChild(resultList, `Ваша цель накопить ${purpose} с учётом расходов будет достигнута за ${arbeitenMonth} месяцев`);
     } else {
-        logOutput(`Вы уже достигли своей цели в ${purpose}!`);
+        addChild(resultList, `Вы уже достигли своей цели в ${purpose}!`);
     }
 
     if (incomeDay >= 6000) {
-        logOutput("У вас высокий уровень дохода");
+        addChild(resultList, "У вас высокий уровень дохода");
     } else if (incomeDay >= 3000) {
-        logOutput("У вас средний уровень дохода");
+        addChild(resultList, "У вас средний уровень дохода");
     } else if (incomeDay > 0) {
-        logOutput("У вас низкий уровень дохода");
+        addChild(resultList, "У вас низкий уровень дохода");
     } else if (incomeDay === 0) {
-        logOutput("Вы выходите в ноль");
+        addChild(resultList, "Вы выходите в ноль");
     } else {
-        logOutput("Цель не будет достигнута никогда! :'(");
+        addChild(resultList, "Цель не будет достигнута никогда! :'(");
     }
-
-    return true;
 }
-if (program() === null) {
-    logOutput("Вычисления были отменены!");
-    alert("Пользователь нажал отмену");
-}
-
-console.log("Script \"main.js\" finished");

@@ -6,13 +6,77 @@
             Learning JavaScript
         </title>
 
+        <script src="./scripts/main.js" type="module" defer></script>
+        <link rel="stylesheet" href="./css/main.css">
     </head>
 
     <body>
-        <h1>
-            JavaScript homework-08
-        </h1>
+        <main>
+            <h1>
+                JavaScript homework-09
+            </h1>
 
-        <script src="./scripts/main.js"></script>
+            <div class="megawrapper">
+                <form action="">
+                    <div>
+                        <div>
+                            Ваш месячный доход:
+                        </div>
+
+                        <div class="input-wrapper">
+                            <input type="text" id="inputIncomingMonth">
+                            <img src="./images/cross.png" alt="X">
+                        </div>
+                    </div>
+
+                    <div>
+                        <div>
+                            Ваш возможный доход за дополнительные работы:
+                        </div>
+
+                        <div class="input-wrapper">
+                            <input type="text" id="inputExtraIncoming">
+                            <img src="./images/cross.png" alt="X">
+                        </div>
+                    </div>
+
+                    <div>
+                        <div>
+                            Обязательные расходы:
+                        </div>
+
+                        <div class="input-wrapper">
+                            <input type="text" id="inputExpensesMonth">
+                            <img src="./images/cross.png" alt="X">
+                        </div>
+                    </div>
+
+                    <div>
+                        <div>
+                            Сколько вы хотите заработать?
+                        </div>
+
+                        <div class="input-wrapper">
+                            <input type="text" id="inputPurpose">
+                            <img src="./images/cross.png" alt="X">
+                        </div>
+                    </div>
+
+                    <div class="buttons">
+                        <button id="proceed">
+                            Расчитать
+                        </button>
+
+                        <button type="reset" id="clear">
+                            Очистить
+                        </button>
+                    </div>
+                </form>
+
+                <div id="results">
+
+                </div>
+            </div>
+        </main>
     </body>
 </html>

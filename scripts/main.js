@@ -3,7 +3,7 @@
 function stringIsValidNumber(str) {
     const typeofStr = typeof(str);
     if (typeofStr === "string") {
-        if (str === "") {
+        if (str === "" || str.includes(" ") || str.includes(",")) {
             return false;
         }
         return !Number.isNaN(Number.parseFloat(str));
@@ -84,7 +84,21 @@ btnProceed.onclick = (e) => {
 
 btnClear.onclick = (e) => {
     clearChilds(resultList);
-}
+
+    inputMonthIncoming.value = "";
+    inputExtraIncoming.value = "";
+    inputExpensesMonth.value = "";
+    inputPurpose.value = "";
+
+    inputMonthIncoming.style.borderColor = "#000000";
+    inputMonthIncoming.nextElementSibling.style.display = 'none';
+    inputExtraIncoming.style.borderColor = "#000000";
+    inputExtraIncoming.nextElementSibling.style.display = 'none';
+    inputExpensesMonth.style.borderColor = "#000000";
+    inputExpensesMonth.nextElementSibling.style.display = 'none';
+    inputPurpose.style.borderColor = "#000000";
+    inputPurpose.nextElementSibling.style.display = 'none';
+};
 
 function calculate() {
     const moneyMonth = Number.parseFloat(inputMonthIncoming.value);
@@ -97,10 +111,11 @@ function calculate() {
         return;
     }
 
-    addChild(resultList, `Ваш бюджет на месяц с учётом расходов составляет: ${roundToFixed(accumulatedMonthIncome, 1)}`);
+    const accumulatedMonthIncomeString = Number.isInteger(accumulatedMonthIncome) ? accumulatedMonthIncome.toString() : roundToFixed(accumulatedMonthIncome, 1);
+    addChild(resultList, `Ваш бюджет на месяц с учётом расходов составляет: ${accumulatedMonthIncomeString}`);
 
     const incomeDay = accumulatedMonthIncome / 30;
-    const incomeDayString = Number.isInteger(incomeDay) ? incomeDay.toString() : Math.floor(incomeDay);
+    const incomeDayString = Number.isInteger(incomeDay) ? incomeDay.toString() : roundToFixed(incomeDay, 1);
     addChild(resultList, `Дневной бюджет: ${incomeDayString}`);
 
     const purpose = Number.parseFloat(inputPurpose.value);

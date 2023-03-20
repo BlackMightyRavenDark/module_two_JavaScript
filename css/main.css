@@ -7,39 +7,10 @@ body {
     background-color: #bbbbbb;
 }
 
-.megawrapper {
+.buttons-wrapper {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
     gap: 10px;
-}
-
-form {
-    width: 220px;
-    background-color: white;
-}
-
-.input-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 3px;
-}
-
-input {
-    display: inline;
-    margin-left: 20px;
-}
-
-img {
-    display: none;
-    width: 16px;
-    height: 16px;
-}
-
-.buttons {
-    display: flex;
-    justify-content: space-around;
-    margin: 10px 0;
 }
 
 button {
@@ -50,5 +21,8 @@ button {
 }
 
 #results {
+    display: flex;
+    flex-direction: column;
+    gap: 20;
     background-color: white;
 }

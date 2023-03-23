@@ -79,6 +79,11 @@ btnGet.addEventListener("click", async (e) => {
                 return `${t} ${obj.first_name} ${obj.last_name},`;
             }, "Пользователи:");
             console.log(users.substring(0, users.length - 1));
+
+            console.log("Список ключей объекта:");
+            for (const key in dataArray[0]) {
+                console.log(key);
+            }
         }
     }
 });

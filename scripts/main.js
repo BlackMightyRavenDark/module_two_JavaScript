@@ -1,141 +1,94 @@
-"use strict";
+const main = document.querySelector("main");
+const btnGet = document.querySelector("#btnGet");
+const btnClear = document.querySelector("#btnClear");
+let resultList = null;
 
-function stringIsValidNumber(str) {
-    const typeofStr = typeof(str);
-    if (typeofStr === "string") {
-        if (str === "" || str.includes(" ") || str.includes(",")) {
-            return false;
+async function getData(countPerPage) {
+    const url = `https://reqres.in/api/users?per_page=${countPerPage}`;
+    const response = await fetch(url);
+    return response.status === 200 ? await response.json() : null;
+}
+
+function clearList() {
+    if (resultList !== null) {
+        main.removeChild(resultList);
+        resultList = null;
+    }
+}
+
+btnGet.addEventListener("click", async (e) => {
+    clearList();
+    console.clear();
+
+    const json = await getData(12);
+    if (json) {
+        const dataArray = json.data;
+        if (dataArray) {
+            resultList = document.createElement("div");
+            let i = 0;
+            dataArray.forEach((j) => {
+                const nodePersonItemWrapper = document.createElement("div");
+                nodePersonItemWrapper.classList.add("person-list__item-wrapper");
+                const nodeImageWrapper = document.createElement("div");
+                nodeImageWrapper.classList.add("item-wrapper__avatar-wrapper");
+
+                const nodeImage = document.createElement("img");
+                nodeImage.setAttribute("src", j.avatar);
+                nodeImage.setAttribute("alt", "avatar");
+                nodeImage.classList.add("list-item__avatar");
+
+                const nodeImageLink = document.createElement("a");
+                nodeImageLink.setAttribute("href", j.avatar);
+                nodeImageLink.setAttribute("target", "_blank");
+                nodeImageLink.appendChild(nodeImage);
+
+                const nodePersonInfoWrapper = document.createElement("div");
+                nodePersonInfoWrapper.classList.add("person-item__info-wrapper");
+
+                const nodePersonName = document.createElement("p");
+                const surname = j.last_name;
+                nodePersonName.textContent = `${j.first_name} ${surname}`;
+                if (surname.startsWith("F")) { //press F
+                    nodePersonName.classList.add("color-red");
+                }
+
+                const nodePersonEmail = document.createElement("p");
+                nodePersonEmail.textContent = `E-Mail: ${j.email}`;
+
+                const nodePersonId = document.createElement("p");
+                nodePersonId.textContent = `Person ID: ${j.id}`;
+
+                nodePersonInfoWrapper.appendChild(nodePersonName);
+                nodePersonInfoWrapper.appendChild(nodePersonEmail);
+                nodePersonInfoWrapper.appendChild(nodePersonId);
+
+                nodeImageWrapper.appendChild(nodeImageLink);
+                nodePersonItemWrapper.appendChild(nodeImageWrapper);
+                nodePersonItemWrapper.appendChild(nodePersonInfoWrapper);
+
+                resultList.classList.add("person-list");
+                resultList.appendChild(nodePersonItemWrapper);
+
+                ++i;
+                const surnameConsole = surname.startsWith("F") ? `${surname} (press F)` : surname;
+                console.log(`User ${i}: ${surnameConsole}`);
+            });
+            main.appendChild(resultList);
+
+            const users = dataArray.reduce((t, obj) => {
+                return `${t} ${obj.first_name} ${obj.last_name},`;
+            }, "Пользователи:");
+            console.log(users.substring(0, users.length - 1));
+
+            console.log("Список ключей объекта:");
+            for (const key in dataArray[0]) {
+                console.log(key);
+            }
         }
-        return !Number.isNaN(Number.parseFloat(str));
-    } else if (typeofStr === "number") {
-        return !Number.isNaN(str);
     }
-    return false;
-}
+});
 
-function isValidInput(input) {
-    const isValid = stringIsValidNumber(input.value);
-    if (isValid) {
-        input.style.borderColor = "#000000";
-        input.nextElementSibling.style.display = 'none';
-    } else {
-        input.style.borderColor = "#ff0000";
-        input.nextElementSibling.style.display = 'block';
-    }
-    return isValid;
-}
-
-function addChild(node, text) {
-    const newNode = document.createElement("p");
-    newNode.textContent = text;
-    node.appendChild(newNode);
-}
-
-function clearChilds(node) {
-    for (let i = node.childNodes.length - 1; i > 0; --i) {
-        node.removeChild(node.childNodes[i]);
-    }
-}
-
-function roundToFixed(n, radix) {
-    if (Number.isFinite(n)) {
-        n = n.toFixed(radix);
-    }
-    return n;
-}
-
-const getAccumulatedMonthIncome = (earnings, extra, expenses) => {
-    return earnings + extra - expenses;
-}
-
-const getTargetMonth = (targetProfit, monthIncome) => {
-    return Math.ceil(targetProfit / monthIncome);
-}
-
-const inputMonthIncoming = document.querySelector("#inputIncomingMonth");
-const inputExtraIncoming = document.querySelector("#inputExtraIncoming");
-const inputExpensesMonth = document.querySelector("#inputExpensesMonth");
-const inputPurpose = document.querySelector("#inputPurpose");
-const resultList = document.querySelector("#results");
-const btnProceed = document.querySelector("#proceed");
-const btnClear = document.querySelector("#clear");
-
-function onInputHandler(e) {
-    isValidInput(e.target);
-}
-
-inputMonthIncoming.addEventListener("input", onInputHandler);
-inputExtraIncoming.addEventListener("input", onInputHandler);
-inputExpensesMonth.addEventListener("input", onInputHandler);
-inputPurpose.addEventListener("input", onInputHandler);
-
-btnProceed.onclick = (e) => {
-    e.preventDefault();
-    clearChilds(resultList);
-    if (isValidInput(inputMonthIncoming) &&
-        isValidInput(inputExtraIncoming) &&
-        isValidInput(inputExpensesMonth) &&
-        isValidInput(inputPurpose)) {
-            calculate();
-    } else {
-        addChild(resultList, "Ошибка вычисления!");
-    }
-};
-
-btnClear.onclick = (e) => {
-    clearChilds(resultList);
-
-    inputMonthIncoming.value = "";
-    inputExtraIncoming.value = "";
-    inputExpensesMonth.value = "";
-    inputPurpose.value = "";
-
-    inputMonthIncoming.style.borderColor = "#000000";
-    inputMonthIncoming.nextElementSibling.style.display = 'none';
-    inputExtraIncoming.style.borderColor = "#000000";
-    inputExtraIncoming.nextElementSibling.style.display = 'none';
-    inputExpensesMonth.style.borderColor = "#000000";
-    inputExpensesMonth.nextElementSibling.style.display = 'none';
-    inputPurpose.style.borderColor = "#000000";
-    inputPurpose.nextElementSibling.style.display = 'none';
-};
-
-function calculate() {
-    const moneyMonth = Number.parseFloat(inputMonthIncoming.value);
-    const extraMoneyMonth = Number.parseFloat(inputExtraIncoming.value);
-    const expensesMonth = Number.parseFloat(inputExpensesMonth.value);
-    const accumulatedMonthIncome = getAccumulatedMonthIncome(moneyMonth, extraMoneyMonth, expensesMonth);
-    if (accumulatedMonthIncome <= 0) {
-        addChild(resultList, "Ошибка! Вы тратите больше, чем зарабатываете!");
-        addChild(resultList, "Цель не будет достигнута никогда! :'(");
-        return;
-    }
-
-    const accumulatedMonthIncomeString = Number.isInteger(accumulatedMonthIncome) ? accumulatedMonthIncome.toString() : roundToFixed(accumulatedMonthIncome, 1);
-    addChild(resultList, `Ваш бюджет на месяц с учётом расходов составляет: ${accumulatedMonthIncomeString}`);
-
-    const incomeDay = accumulatedMonthIncome / 30;
-    const incomeDayString = Number.isInteger(incomeDay) ? incomeDay.toString() : roundToFixed(incomeDay, 1);
-    addChild(resultList, `Дневной бюджет: ${incomeDayString}`);
-
-    const purpose = Number.parseFloat(inputPurpose.value);
-
-    if (purpose > accumulatedMonthIncome) {
-        const arbeitenMonth = getTargetMonth(purpose, accumulatedMonthIncome);
-        addChild(resultList, `Ваша цель накопить ${purpose} с учётом расходов будет достигнута за ${arbeitenMonth} месяцев`);
-    } else {
-        addChild(resultList, `Вы уже достигли своей цели в ${purpose}!`);
-    }
-
-    if (incomeDay >= 6000) {
-        addChild(resultList, "У вас высокий уровень дохода");
-    } else if (incomeDay >= 3000) {
-        addChild(resultList, "У вас средний уровень дохода");
-    } else if (incomeDay > 0) {
-        addChild(resultList, "У вас низкий уровень дохода");
-    } else if (incomeDay === 0) {
-        addChild(resultList, "Вы выходите в ноль");
-    } else {
-        addChild(resultList, "Цель не будет достигнута никогда! :'(");
-    }
-}
+btnClear.addEventListener("click", (e) => {
+    clearList();
+    console.clear();
+});

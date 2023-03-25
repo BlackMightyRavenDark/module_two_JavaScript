@@ -6,6 +6,10 @@
             Авторизация (Д/З 11)
         </title>
 
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
         <script src="./scripts/main.js" defer></script>
 
         <link rel="stylesheet" href="./css/main.css">
@@ -13,7 +17,61 @@
 
     <body>
         <main>
+            <form action="" method="post">
+                <p>
+                    Авторизоваться
+                </p>
 
+                <div class="form__content-wrapper">
+                    <h1>
+                        Регистрация
+                    </h1>
+
+                    <div class="fields-wrapper">
+                        <div class="fields-wrapper__email-wrapper">
+                            <label for="email" class="label-email">
+                                Email
+                            </label>
+
+                            <input type="email" placeholder="Введите email" id="email">
+
+                            <div class="error-message">
+                                Поле обязательно для заполнения
+                            </div>
+                        </div>
+
+                        <div class="fields-wrapper__password-wrapper">
+                            <label for="password" class="label-password">
+                                Пароль
+                            </label>
+
+                            <input type="password" id="password" placeholder="Введите пароль">
+
+                            <div class="error-message">
+                                Поле обязательно для заполнения
+                            </div>
+                        </div>
+
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" name="" id="checkbox" checked>
+
+                            <label for="checkbox" class="label-checkbox">
+                                Я согласен получать обновления на почту
+                            </label>
+
+                            <div class="error-message">
+                                Поле обязательно для заполнения
+                            </div>
+                        </div>
+
+                        <div class="form__button-wrapper">
+                            <button>
+                                Регистрация
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </main>
     </body>
 </html>

@@ -26,7 +26,7 @@ form > p {
 }
 
 .form__content-wrapper {
-    margin: 11px 45px 25px 45px;
+    margin: 11px 45px 25px 35px;
 }
 
 h1 {
@@ -45,22 +45,47 @@ h1 {
 
 .label-email, .label-password {
     display: block;
-    margin-left: 10px;
+    margin-left: 20px;
 }
 
 .label-checkbox {
     font-size: 14px;
     font-weight: 400;
+    margin-left: 26px;
     color: rgba(120, 120, 120, 1);
 }
 
-label::after {
-    content: '*';
+.checkbox-wrapper {
+    position: relative;
+}
+
+input[type="checkbox"]:checked + .label-checkbox::before {
+    content: url("./../images/check.svg");
+    position: absolute;
+    left: 14px;
+    border: 2px solid rgba(120, 120, 120, 1);
+    border-radius: 7px;
+}
+
+.label-checkbox::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    width: 17px;
+    height: 16px;
+    left: 14px;
+    border: 2px solid rgba(120, 120, 120, 1);
+    border-radius: 7px;
+}
+
+input[type="checkbox"] {
+    display: none;
 }
 
 input[type="email"], input[type="password"] {
     width: 510px;
     height: 50px;
+    margin-left: 10px;
     border-radius: 10px;
 }
 
@@ -69,6 +94,11 @@ input::placeholder {
     font-size: 28px;
     font-weight: 700;
     color: rgba(204, 204, 204, 1);
+}
+
+.star-input {
+    position: absolute;
+    top: 24px;
 }
 
 .form__button-wrapper {
@@ -87,6 +117,11 @@ button {
 }
 
 .error-message {
+    margin-left: 10px;
     font-size: 0.8em;
     color: red;
+}
+
+.fields-wrapper__email-wrapper, .fields-wrapper__password-wrapper {
+    position: relative;
 }

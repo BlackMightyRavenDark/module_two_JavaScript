@@ -62,7 +62,7 @@ h1 {
 input[type="checkbox"]:checked + .label-checkbox::before {
     content: url("./../images/check.svg");
     position: absolute;
-    left: 14px;
+    left: 10px;
     border: 2px solid rgba(120, 120, 120, 1);
     border-radius: 7px;
 }
@@ -73,7 +73,8 @@ input[type="checkbox"]:checked + .label-checkbox::before {
     position: absolute;
     width: 17px;
     height: 16px;
-    left: 14px;
+    left: 10px;
+    top: 1px;
     border: 2px solid rgba(120, 120, 120, 1);
     border-radius: 7px;
 }
@@ -86,11 +87,13 @@ input[type="email"], input[type="password"] {
     width: 510px;
     height: 50px;
     margin-left: 10px;
+    padding-left: 15px;
     border-radius: 10px;
+    font-size: 28px;
+    font-weight: 700;
 }
 
 input::placeholder {
-    padding-left: 15px;
     font-size: 28px;
     font-weight: 700;
     color: rgba(204, 204, 204, 1);
@@ -117,6 +120,7 @@ button {
 }
 
 .error-message {
+    display: none;
     margin-left: 10px;
     font-size: 0.8em;
     color: red;

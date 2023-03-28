@@ -13,4 +13,5 @@ book2[13].after(book2[17]);
 book2[8].after(book2[14]);
 book2[19].after(book2[5]);
 
-console.log(book2)
+const book3text = books[4].childNodes[1].childNodes[1].childNodes[0];
+book3text.textContent = book3text.textContent.replace("попипы", "тотипы");

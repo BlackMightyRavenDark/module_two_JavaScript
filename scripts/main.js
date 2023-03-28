@@ -19,6 +19,13 @@ function fixBook2() {
     book2[19].after(book2[5]);
 }
 
+function fixBook5() {
+    const book5 = books[5].childNodes[3].childNodes;
+    book5[3].after(book5[19]);
+    book5[10].after(book5[6]);
+    book5[18].before(book5[12]);
+}
+
 function fixBook3Title() {
     const book3text = books[4].childNodes[1].childNodes[1].childNodes[0];
     book3text.textContent = book3text.textContent.replace("попипы", "тотипы");
@@ -27,4 +34,5 @@ function fixBook3Title() {
 removeAdvertisement();
 fixBooksOrder();
 fixBook2();
+fixBook5();
 fixBook3Title();

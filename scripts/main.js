@@ -31,12 +31,15 @@ function fixBook6() {
     const li = document.createElement("li");
     li.textContent = "Глава 8: За пределами ES6";
     book6[book6.length - 2].before(li);
-    console.log(book6);
 }
 
 function fixBook3Title() {
     const book3text = books[4].childNodes[1].childNodes[1].childNodes[0];
     book3text.textContent = book3text.textContent.replace("попипы", "тотипы");
+}
+
+function changeBackgroundImage() {
+    document.body.style.backgroundImage = "url(./../image/you-dont-know-js.jpg)";
 }
 
 removeAdvertisement();
@@ -45,3 +48,4 @@ fixBook2();
 fixBook5();
 fixBook6();
 fixBook3Title();
+changeBackgroundImage();

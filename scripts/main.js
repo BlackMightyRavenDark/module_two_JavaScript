@@ -39,7 +39,7 @@ function fixBook3Title() {
 }
 
 function changeBackgroundImage() {
-    document.body.style.backgroundImage = "url(./../image/you-dont-know-js.jpg)";
+    document.body.style.backgroundImage = "url('image/you-dont-know-js.jpg')";
 }
 
 removeAdvertisement();

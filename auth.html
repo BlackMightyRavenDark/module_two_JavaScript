@@ -3,33 +3,31 @@
     <head>
         <meta charset="UTF-8">
         <title>
-            Авторизация (Д/З 11)
+            Авторизация
         </title>
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
-        <script src="./scripts/main.js" defer></script>
-
-        <link rel="stylesheet" href="./css/main.css">
+        <link rel="stylesheet" href="./css/auth.css">
     </head>
 
     <body>
         <main>
             <form action="" method="post">
-                <div class="form-registration__auth-wrapper">
-                    <button class="form-registration__btn-authorize" id="btn-authorize">
-                        Авторизоваться
+                <div class="form-authorization__register-wrapper">
+                    <button class="form-authorization__button-register" id="btn-register">
+                        Зарегистрироваться
                     </button>
                 </div>
 
-                <div class="form-registration__content-wrapper">
+                <div class="form-authorization__content-wrapper">
                     <h1>
-                        Регистрация
+                        ВХОД
                     </h1>
 
-                    <div class="form-registration__fields-wrapper">
+                    <div class="form-authorization__fields-wrapper">
                         <div class="fields-wrapper__email-wrapper">
                             <label for="email" class="label-email">
                                 Email
@@ -39,7 +37,7 @@
                                 *
                             </span>
 
-                            <input type="email" placeholder="Введите email" id="email-registration">
+                            <input type="email" placeholder="Введите email" id="email-authorization">
 
                             <div class="error-message">
                                 Поле обязательно для заполнения
@@ -55,22 +53,22 @@
                                 *
                             </span>
 
-                            <input type="password" id="password-registration" placeholder="Введите пароль">
+                            <input type="password" id="password-authorization" placeholder="Введите пароль">
 
                             <div class="error-message">
                                 Поле обязательно для заполнения
                             </div>
                         </div>
 
-                        <div class="form-registration__checkbox-wrapper">
+                        <div class="form-authorization__checkbox-wrapper">
                             <span>
                                 *
                             </span>
 
-                            <input type="checkbox" id="checkbox-registration">
+                            <input type="checkbox" id="checkbox-authorization">
 
-                            <label for="checkbox-registration" class="form-registration__label-checkbox">
-                                Я согласен получать обновления на почту
+                            <label for="checkbox-authorization" class="form-authorization__label-checkbox">
+                                Я согласен с <span class="eula">Правилами пользования приложением</span>
                             </label>
 
                             <div class="error-message">
@@ -78,14 +76,16 @@
                             </div>
                         </div>
 
-                        <div class="form-registration__button-wrapper">
-                            <button id="register">
-                                Регистрация
+                        <div class="form-authorization__button-wrapper">
+                            <button id="btn-login">
+                                Войти
                             </button>
                         </div>
                     </div>
                 </div>
             </form>
         </main>
+
+        <script src="./scripts/auth.js"></script>
     </body>
 </html>

@@ -1,8 +1,8 @@
-const inputBoxEmail = document.querySelector("#email-registration");
-const inputBoxPassword = document.querySelector("#password-registration");
-const checkBox = document.querySelector("#checkbox-registration");
-const btnAuthorize = document.querySelector("#btn-authorize");
-const btnRegister = document.querySelector("#register");
+const inputBoxEmail = document.querySelector("#email-authorization");
+const inputBoxPassword = document.querySelector("#password-authorization");
+const checkBox = document.querySelector("#checkbox-authorization");
+const btnLogin = document.querySelector("#btn-login");
+const btnRegister = document.querySelector("#btn-register");
 
 function validateInputBox(inputBox, errorText) {
     if (typeof(errorText) === "string") {
@@ -66,18 +66,10 @@ inputBoxPassword.addEventListener("focus", (e) => {
 
 btnRegister.addEventListener("click", (e) => {
     e.preventDefault();
-    if (validateAll()) {
-        const dataObj = {
-            email: inputBoxEmail.value,
-            password: inputBoxPassword.value
-        };
-
-        const json = JSON.stringify(dataObj);
-        console.log(json);
-    }
+    document.location.href = "/index.html";
 });
 
-btnAuthorize.addEventListener("click", (e) => {
+btnLogin.addEventListener("click", (e) => {
     e.preventDefault();
-    document.location.href = "/auth.html";
+    validateAll();
 });

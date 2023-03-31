@@ -17,12 +17,12 @@ form {
     background-color: white;
 }
 
-.form-registration__auth-wrapper {
+.form-authorization__register-wrapper {
     text-align: right;
     padding: 11px 11px 0 0;
 }
 
-.form-registration__btn-authorize {
+.form-authorization__button-register {
     cursor: pointer;
     font-size: 14px;
     font-weight: 700;
@@ -31,7 +31,7 @@ form {
     color: rgba(26, 34, 107, 1);
 }
 
-.form-registration__content-wrapper {
+.form-authorization__content-wrapper {
     margin: 11px 45px 25px 35px;
 }
 
@@ -43,7 +43,7 @@ h1 {
     color: rgba(120, 120, 120, 1);
 }
 
-.form-registration__fields-wrapper {
+.form-authorization__fields-wrapper {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -54,18 +54,23 @@ h1 {
     margin-left: 20px;
 }
 
-.form-registration__checkbox-wrapper {
+.form-authorization__checkbox-wrapper {
     position: relative;
 }
 
-.form-registration__label-checkbox {
+.form-authorization__label-checkbox {
     font-size: 14px;
     font-weight: 400;
     margin-left: 26px;
     color: rgba(120, 120, 120, 1);
 }
 
-input[type="checkbox"]:checked + .form-registration__label-checkbox::before {
+.eula {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+input[type="checkbox"]:checked + .form-authorization__label-checkbox::before {
     content: url("./../images/check.svg");
     position: absolute;
     left: 10px;
@@ -73,7 +78,7 @@ input[type="checkbox"]:checked + .form-registration__label-checkbox::before {
     border-radius: 7px;
 }
 
-.form-registration__label-checkbox::before {
+.form-authorization__label-checkbox::before {
     content: "";
     display: inline-block;
     position: absolute;
@@ -110,12 +115,12 @@ input::placeholder {
     top: 24px;
 }
 
-.form-registration__button-wrapper {
+.form-authorization__button-wrapper {
     display: flex;
     margin-top: 50px;
 }
 
-.form-registration__button-wrapper > button {
+.form-authorization__button-wrapper > button {
     cursor: pointer;
     padding: 5px 10px;
     margin: auto;

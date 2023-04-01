@@ -1,5 +1,6 @@
 import { validateInputBox } from "./func.js";
 import { validateAll } from "./func.js";
+import { loginUser } from "./func.js";
 
 const inputBoxEmail = document.querySelector("#email-authorization");
 const inputBoxPassword = document.querySelector("#password-authorization");
@@ -22,5 +23,22 @@ btnRegister.addEventListener("click", (e) => {
 
 btnLogin.addEventListener("click", (e) => {
     e.preventDefault();
-    validateAll(inputBoxEmail, inputBoxPassword, checkBox);
+    if (validateAll(inputBoxEmail, inputBoxPassword, checkBox)) {
+        const email = inputBoxEmail.value;
+        const pass = inputBoxPassword.value;
+        const loginResult = loginUser(email, pass);
+        switch (loginResult) {
+            case 0:
+                alert("ok");
+                break;
+
+            case 1:
+                validateInputBox(inputBoxEmail, "Юзер не зарегистрирован");
+                break;
+
+            case 2:
+                validateInputBox(inputBoxPassword, "Неверный пароль");
+                break;
+        }
+    }
 });

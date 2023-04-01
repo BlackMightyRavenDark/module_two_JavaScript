@@ -77,3 +77,23 @@ export function registerUser(email, password) {
         localStorage.setItem("users", JSON.stringify(users));
     }
 }
+
+/**
+ *  Авторизация юзера
+ * @param {string} email - email юзера
+ * @param {string} password - Пароль юзера
+ * @returns {number} 0 - успех. 1 - юзер не зарегистрирован. 2 - неверный пароль.
+ */
+export function loginUser(email, password) {
+    const users = JSON.parse(localStorage.getItem("users"));
+    if (users === null || users === undefined || users === "") {
+        return 1;
+    }
+
+    const userPassword = users[email];
+    if (userPassword === undefined || userPassword === null || typeof(userPassword) !== "string") {
+        return 1;
+    }
+
+    return userPassword === password ? 0 : 2;
+}

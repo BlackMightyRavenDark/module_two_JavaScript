@@ -51,3 +51,29 @@ export function validateAll(inputBoxEmail, inputBoxPassword, checkBox) {
     const bool3 = validateCheckBox(checkBox);
     return bool1 && bool2 && bool3;
 }
+
+export function isUserRegistered(email) {
+    if (localStorage.length === 0) {
+        return false;
+    }
+
+    const users = JSON.parse(localStorage.getItem("users"));
+    if (users === null || users === undefined || users === "") {
+        return false;
+    }
+
+    const userPassword = users[email];
+    return userPassword !== undefined && userPassword !== null;
+}
+
+export function registerUser(email, password) {
+    let users = JSON.parse(localStorage.getItem("users"));
+    if (users) {
+        users[email] = password;
+        localStorage.setItem("users", JSON.stringify(users));
+    } else {
+        users = JSON.parse("{}");
+        users[email] = password;
+        localStorage.setItem("users", JSON.stringify(users));
+    }
+}

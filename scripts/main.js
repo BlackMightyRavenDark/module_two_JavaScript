@@ -1,5 +1,7 @@
 import { validateInputBox } from "./func.js";
 import { validateAll } from "./func.js";
+import { isUserRegistered } from "./func.js";
+import { registerUser } from "./func.js";
 
 const inputBoxEmail = document.querySelector("#email-registration");
 const inputBoxPassword = document.querySelector("#password-registration");
@@ -18,13 +20,15 @@ inputBoxPassword.addEventListener("focus", (e) => {
 btnRegister.addEventListener("click", (e) => {
     e.preventDefault();
     if (validateAll(inputBoxEmail, inputBoxPassword, checkBox)) {
-        const dataObj = {
-            email: inputBoxEmail.value,
-            password: inputBoxPassword.value
-        };
+        if (isUserRegistered(inputBoxEmail.value)) {
+            const errorText = "Такой пользователь уже зарегистрирован!";
+            validateInputBox(inputBoxEmail, errorText);
+            alert(errorText);
+            return;
+        }
 
-        const json = JSON.stringify(dataObj);
-        console.log(json);
+        registerUser(inputBoxEmail.value, inputBoxPassword.value);
+        document.location.href = "/regOk.html";
     }
 });
 

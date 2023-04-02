@@ -29,7 +29,7 @@ btnLogin.addEventListener("click", (e) => {
         const loginResult = loginUser(email, pass);
         switch (loginResult) {
             case 0:
-                alert("ok");
+                document.location.href = "/main.html";
                 break;
 
             case 1:

@@ -18,7 +18,7 @@ inputBoxPassword.addEventListener("focus", (e) => {
 
 btnRegister.addEventListener("click", (e) => {
     e.preventDefault();
-    document.location.href = "/index.html";
+    document.location.href = "index.html";
 });
 
 btnLogin.addEventListener("click", (e) => {
@@ -29,7 +29,7 @@ btnLogin.addEventListener("click", (e) => {
         const loginResult = loginUser(email, pass);
         switch (loginResult) {
             case 0:
-                document.location.href = "/main.html";
+                document.location.href = "main.html";
                 break;
 
             case 1:

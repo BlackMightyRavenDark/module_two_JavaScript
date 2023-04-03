@@ -28,11 +28,11 @@ btnRegister.addEventListener("click", (e) => {
         }
 
         registerUser(inputBoxEmail.value, inputBoxPassword.value);
-        document.location.href = "/regOk.html";
+        document.location.href = "regOk.html";
     }
 });
 
 btnAuthorize.addEventListener("click", (e) => {
     e.preventDefault();
-    document.location.href = "/auth.html";
+    document.location.href = "auth.html";
 });
